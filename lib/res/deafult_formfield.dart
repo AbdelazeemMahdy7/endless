@@ -10,6 +10,7 @@ class DeafultFormField extends StatelessWidget {
   final TextEditingController? controller;
   FormFieldValidator<String>? validator;
   ValueChanged<String>? onFieldSubmitted;
+  TextInputType? textInputType;
 
   DeafultFormField({
     Key? key,
@@ -20,6 +21,7 @@ class DeafultFormField extends StatelessWidget {
     this.prefixIcon,
     this.textInputAction,
     this.controller,
+    this.textInputType
   }) : super(key: key);
 
   @override
@@ -33,7 +35,9 @@ class DeafultFormField extends StatelessWidget {
         controller: controller,
         validator: validator,
         onFieldSubmitted: onFieldSubmitted,
+        keyboardType: textInputType,
         decoration: InputDecoration(
+
           iconColor: MyColors.primaryColor,
           focusColor: MyColors.primaryColor,
           hintText: hintText,

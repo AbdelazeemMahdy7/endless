@@ -1,70 +1,116 @@
 import 'package:endless/constant/colors.dart';
 import 'package:endless/constant/strings.dart';
+import 'package:endless/contorller/app_bloc.dart';
+import 'package:endless/contorller/app_states.dart';
+import 'package:endless/core/usecase/use_case.dart';
 import 'package:endless/presentation/widgets/build_categories_item.dart';
 import 'package:endless/presentation/widgets/build_sheet_website_call_item.dart';
 import 'package:endless/shared/components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    AppBloc appBloc = AppBloc.get(context);
+
+    appBloc.userProfile(NoParams());
+    appBloc.getCompanies(NoParams());
+    appBloc.getOffers(NoParams());
+
     return Stack(
       children: [
         SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: Container(
-              padding: const EdgeInsets.all(8),
-              margin: const EdgeInsets.all(8),
-              child: ListView(
-                children: [
-                  buildTopHomeItem(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  buildSearchNotifactionsItem(context),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  buildBoldText("Categories"),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  buildCategoriesItem(),
-                  const SizedBox(height: 20),
-                  buildBoldText("Companies"),
-                  const SizedBox(height: 6),
-                  // when click on this inKWell widget will showing bottom sheet
-                  InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20),
-                          ),
+            body: BlocConsumer<AppBloc, AppStates>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        buildTopHomeItem(),
+                        const SizedBox(
+                          height: 10,
                         ),
-                        builder: (context) => buildSheet(context),
-                      );
-                    },
-                    child: buildCompanyItem(),
+                        buildSearchNotifactionsItem(context),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        buildBoldText("Categories"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        buildCategoriesItem(),
+                        const SizedBox(height: 20),
+                        buildBoldText("Companies"),
+                        const SizedBox(height: 6),
+                        // when click on this inKWell widget will showing bottom sheet
+                        ListView.builder(
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                appBloc.getCompanyImages(
+                                    appBloc.companiesList[index].id!);
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20),
+                                    ),
+                                  ),
+                                  builder: (context) => state
+                                          is GetCompanyImagesLoadingState
+                                      ? Container(
+                                          color: Colors.white,
+                                          height: 100,
+                                          child: const Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                        )
+                                      : buildSheet(
+                                          context,
+                                          name:
+                                              appBloc.companiesList[index].name,
+                                          phone: appBloc
+                                              .companiesList[index].phone,
+                                          companyId:
+                                              appBloc.companiesList[index].id!,
+                                          images: appBloc.companyImages,
+                                        ),
+                                );
+                              },
+                              child: buildCompanyItem(
+                                name: appBloc.companiesList[index].name,
+                                image: appBloc.companiesList[index].media,
+                              ),
+                            );
+                          },
+                        ),
+
+                        const SizedBox(height: 6),
+                        buildDiscoverBox(context),
+                        const SizedBox(height: 6),
+                        buildBoldText("Best Offers"),
+                        const SizedBox(height: 6),
+                        InkWell(
+                          child: Image.asset("assets/images/best_offer.jpeg"),
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, bestOfferScreen);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 6),
-                  buildDiscoverBox(context),
-                  const SizedBox(height: 6),
-                  buildBoldText("Best Offers"),
-                  const SizedBox(height: 6),
-                  InkWell(
-                    child: Image.asset("assets/images/best_offer.jpeg"),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, bestOfferScreen);
-                    },
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),
@@ -72,7 +118,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCompanyItem() {
+  Widget buildCompanyItem({required String image, required String name}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -81,7 +127,7 @@ class HomeScreen extends StatelessWidget {
           width: 200,
           child: Stack(
             children: [
-              Image.asset("assets/images/categoryTwo.jpeg", fit: BoxFit.cover),
+              Image.network(image, fit: BoxFit.cover),
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
@@ -98,7 +144,7 @@ class HomeScreen extends StatelessWidget {
         Row(
           children: [
             Text(
-              "Reta Ropens",
+              name,
               style: TextStyle(color: MyColors.primaryColor, fontSize: 16),
             ),
             const SizedBox(width: 30),
@@ -123,10 +169,10 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildCategoriesItem() {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: const [
+        children: [
           BuildCategoriesItem(
             text: "All",
           ),
@@ -136,8 +182,6 @@ class HomeScreen extends StatelessWidget {
           BuildCategoriesItem(text: "BD Party"),
           SizedBox(width: 8),
           BuildCategoriesItem(text: "Grad Party"),
-          SizedBox(width: 8),
-          BuildCategoriesItem(text: "Wedding"),
           SizedBox(width: 8),
           BuildCategoriesItem(text: "Baby Party"),
           SizedBox(width: 8),
@@ -247,7 +291,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSheet(context) {
+  Widget buildSheet(
+    context, {
+    required String name,
+    required List<String> images,
+    required String phone,
+    required int companyId,
+  }) {
     return SizedBox(
       height: 565,
       child: Container(
@@ -397,7 +447,7 @@ class HomeScreen extends StatelessWidget {
                   border: Border.all()),
               child: MaterialButton(
                 onPressed: () {
-                   Navigator.pushReplacementNamed(context, reservationScreen);
+                  Navigator.pushReplacementNamed(context, reservationScreen);
                 },
                 child: Text(
                   "Reserve",
@@ -452,7 +502,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget overviewDeafultTexts(String text){
+  Widget overviewDeafultTexts(String text) {
     return Text(
       text,
       style: TextStyle(

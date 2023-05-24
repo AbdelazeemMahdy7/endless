@@ -12,3 +12,4 @@ const endlessScreen ='/endless_screen';
 
 const googleApiKey ="AIzaSyCRKgxW6HVH-mGcgJgd2ww5-utTke-6GMo";
 const suggestionBaseUrl ="https://maps.googleapis.com/maps/api/place/autocomplete/json";
+String? token;
