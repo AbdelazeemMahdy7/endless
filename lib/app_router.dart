@@ -1,3 +1,5 @@
+import 'package:endless/data/repository/maps_repository.dart';
+import 'package:endless/data/webServices/places_webServices.dart';
 import 'package:endless/endless_screens/endless_screen.dart';
 import 'package:endless/presentation/screens/best_offer_screen.dart';
 import 'package:endless/constant/strings.dart';
@@ -10,10 +12,7 @@ import 'package:endless/presentation/screens/reservation_screen.dart';
 import 'package:endless/spalsh/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'buisness_logic/cubit/maps/maps_cubit.dart';
-import 'data/repository/maps_repository.dart';
-import 'data/webServices/places_webServices.dart';
 import 'endless_screens/favorite_screen.dart';
 import 'endless_screens/home_screen.dart';
 
@@ -72,7 +71,7 @@ class AppRouter{
       case mapScreen:
         return MaterialPageRoute(
           builder: (_)=>BlocProvider(
-            create: (context)=>MapsCubit(MapRepository(PlacesWebServices())),
+            create: (context)=> MapsCubit(MapsRepository(PlacesWebservices())),
             child: MapScreen(),
           ),
         );

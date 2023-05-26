@@ -1,16 +1,33 @@
+import 'package:bloc/bloc.dart';
+import 'package:endless/data/models/place.dart';
+import 'package:endless/data/models/place_directions.dart';
+import 'package:endless/data/models/place_suggestion.dart';
 import 'package:endless/data/repository/maps_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:meta/meta.dart';
+
 part 'maps_state.dart';
 
-class MapsCubit extends Cubit<MapsStates> {
+class MapsCubit extends Cubit<MapsState> {
+  final MapsRepository mapsRepository;
 
-  final MapRepository mapRepository;
-  MapsCubit(this.mapRepository) : super(MapsInitial());
+  MapsCubit(this.mapsRepository) : super(MapsInitial());
 
-  void emitPlaceSuggestation(String places,String sessionToken){
-    mapRepository.getPlacesSuggestion(places, sessionToken).then((suggestions) {
+  void emitPlaceSuggestions(String place, String sessionToken) {
+    mapsRepository.fetchSuggestions(place, sessionToken).then((suggestions) {
       emit(PlacesLoaded(suggestions));
     });
   }
 
+  void emitPlaceLocation(String placeId, String sessionToken) {
+    mapsRepository.getPlaceLocation(placeId, sessionToken).then((place) {
+      emit(PlaceLocationLoaded(place));
+    });
+  }
+
+  void emitPlaceDirections(LatLng origin, LatLng destination) {
+    mapsRepository.getDirections(origin, destination).then((directions) {
+      emit(DirectionsLoaded(directions));
+    });
+  }
 }

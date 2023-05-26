@@ -10,6 +10,10 @@ const reservationScreen = '/reservation_screen';
 const mapScreen ='/map_screen';
 const endlessScreen ='/endless_screen';
 
-const googleApiKey ="AIzaSyCRKgxW6HVH-mGcgJgd2ww5-utTke-6GMo";
-const suggestionBaseUrl ="https://maps.googleapis.com/maps/api/place/autocomplete/json";
+const googleAPIKey ="AIzaSyCRKgxW6HVH-mGcgJgd2ww5-utTke-6GMo";
+const suggestionsBaseUrl ="https://maps.googleapis.com/maps/api/place/autocomplete/json";
+const directionsBaseUrl =
+    'https://maps.googleapis.com/maps/api/directions/json';
+const placeLocationBaseUrl =
+    'https://maps.googleapis.com/maps/api/place/details/json';
 String? token;

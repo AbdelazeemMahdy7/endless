@@ -1,19 +1,37 @@
-import 'package:endless/data/models/place_suggestion.dart';
+import 'package:endless/data/models/place.dart';
 import 'package:endless/data/webServices/places_webServices.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapRepository {
-  final PlacesWebServices placesWebServices;
+import '../models/place_directions.dart';
+import '../models/place_suggestion.dart';
 
-  MapRepository(this.placesWebServices);
+class MapsRepository {
+  final PlacesWebservices placesWebservices;
 
-  Future<List<dynamic>> getPlacesSuggestion(
-    String places,
-    String sessionToken,
-  ) async {
-    final suggestions =await placesWebServices.getPlacesSuggestion(places, sessionToken);
+  MapsRepository(this.placesWebservices);
 
-    return suggestions.map((suggestation) =>
-        PlaceSuggestion.fromJson(suggestation))
+  Future<List<PlaceSuggestion>> fetchSuggestions(
+      String place, String sessionToken) async {
+    final suggestions =
+    await placesWebservices.fetchSuggestions(place, sessionToken);
+
+    return suggestions
+        .map((suggestion) => PlaceSuggestion.fromJson(suggestion))
         .toList();
+  }
+
+  Future<Place> getPlaceLocation(String placeId, String sessionToken) async {
+    final place =
+    await placesWebservices.getPlaceLocation(placeId, sessionToken);
+    // var readyPlace = Place.fromJson(place);
+    return Place.fromJson(place);
+  }
+
+  Future<PlaceDirections> getDirections(
+      LatLng origin, LatLng destination) async {
+    final directions =
+    await placesWebservices.getDirections(origin, destination);
+
+    return PlaceDirections.fromJson(directions);
   }
 }
