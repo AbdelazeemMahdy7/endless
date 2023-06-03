@@ -1,10 +1,10 @@
 import 'dart:async';
-
-import 'package:endless/buisness_logic/cubit/maps/maps_cubit.dart';
 import 'package:endless/constant/colors.dart';
-import 'package:endless/data/models/place.dart';
-import 'package:endless/data/models/place_suggestion.dart';
+import 'package:endless/contorller/maps/maps_cubit.dart';
 import 'package:endless/helprs/location_helper.dart';
+import 'package:endless/maps_data/models/place.dart';
+import 'package:endless/maps_data/models/place_directions.dart';
+import 'package:endless/maps_data/models/place_suggestion.dart';
 import 'package:endless/presentation/widgets/distance_and_time.dart';
 import 'package:endless/presentation/widgets/place_item.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../data/models/place_directions.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);

@@ -15,7 +15,7 @@ class DeafultText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 20,
       child: Text(
         text,

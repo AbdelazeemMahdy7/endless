@@ -107,9 +107,9 @@ class AddReservationErrorState extends AppStates{
 
 class SearchByEventLoadingState extends AppStates{}
 class SearchByEventSuccessState extends AppStates{
-  OfferEntity offerEntity;
+  List<OfferEntity> offersList;
 
-  SearchByEventSuccessState(this.offerEntity);
+  SearchByEventSuccessState(this.offersList);
 }
 class SearchByEventErrorState extends AppStates{
   String error;
@@ -118,6 +118,7 @@ class SearchByEventErrorState extends AppStates{
 }
 
 class GetCompanyImagesLoadingState extends AppStates{}
+class AddFavouriteCompanyState extends AppStates{}
 class GetCompanyImagesSuccessState extends AppStates{
 
 }

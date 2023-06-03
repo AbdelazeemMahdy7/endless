@@ -1,5 +1,5 @@
 import 'package:endless/constant/colors.dart';
-import 'package:endless/data/models/place_directions.dart';
+import 'package:endless/maps_data/models/place_directions.dart';
 import 'package:flutter/material.dart';
 
 class DistanceAndTime extends StatelessWidget {

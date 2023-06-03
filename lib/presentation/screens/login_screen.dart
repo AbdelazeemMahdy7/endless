@@ -5,10 +5,10 @@ import 'package:endless/contorller/app_states.dart';
 import 'package:endless/core/di/injection.dart';
 import 'package:endless/core/network/local/cache_helper.dart';
 import 'package:endless/domain/usecase/login_usecase.dart';
-import 'package:endless/res/deafult_formfield.dart';
+import 'package:endless/presentation/widgets/deafult_formfield.dart';
 import 'package:endless/shared/components.dart';
-import 'package:endless/res/deafult_text.dart';
-import 'package:endless/res/my_divider.dart';
+import 'package:endless/presentation/widgets/deafult_text.dart';
+import 'package:endless/presentation/widgets/my_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,51 +32,61 @@ class LoginScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             body: BlocConsumer<AppBloc, AppStates>(
               listener: (context, state) {
-                if(state is LogInSuccessState){
+                if (state is LogInSuccessState) {
                   sl<CacheHelper>().put('token', state.logInEntity.token);
                   token = state.logInEntity.token;
+                  print(token);
                   Navigator.pushReplacementNamed(context, endlessScreen);
                 }
               },
               builder: (context, state) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(10),
-                  child: ListView(
-                    children: [
-                      Form(
-                        key: formkey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            signInText(),
-                            const SizedBox(
-                              height: 40,
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    state is LogInLoadingState
+                        ? const Center(child: CircularProgressIndicator())
+                        : Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
+                              child: ListView(
+                                children:[ Form(
+                                  key: formkey,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      signInText(),
+                                      const SizedBox(
+                                        height: 40,
+                                      ),
+                                      loginEmailAndPassword(
+                                          emailController: emailController,
+                                          passwordController: passwordController),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      buildSignINButton(context, () {
+                                        if (formkey.currentState!.validate()) {
+                                          appBloc.logIn(LogInParams(
+                                              email: emailController.text,
+                                              password: passwordController.text));
+                                        }
+                                      }),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const MyDivider(),
+                                      const SizedBox(height: 15),
+                                      signFacebookAndGoogle(),
+                                      const SizedBox(height: 20),
+                                      buildSignInRow(context),
+                                    ],
+                                  ),
+                                )],
+                              ),
                             ),
-                            loginEmailAndPassword(emailController: emailController,passwordController: passwordController),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            buildSignINButton(context,(){
-                              if (formkey.currentState!.validate()) {
-                                appBloc.logIn(LogInParams(email: emailController.text, password: passwordController.text));
-                              }
-                              Navigator.pushReplacementNamed(context, endlessScreen);
-
-                            }),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const MyDivider(),
-                            const SizedBox(height: 15),
-                            signFacebookAndGoogle(),
-                            const SizedBox(height: 20),
-                            buildSignInRow(context),
-                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                  ],
                 );
               },
             ),
@@ -86,8 +96,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-
-  Widget buildSignINButton(context,VoidCallback onPressed) {
+  Widget buildSignINButton(context, VoidCallback onPressed) {
     return Container(
       height: 45,
       width: double.infinity,
@@ -109,7 +118,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-
   Widget buildSignInRow(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -123,13 +131,15 @@ class LoginScreen extends StatelessWidget {
             Navigator.pushReplacementNamed(context, registerScreen);
           },
           child:
-          Text("Sign In", style: TextStyle(color: MyColors.deafultColor)),
+              Text("Sign In", style: TextStyle(color: MyColors.deafultColor)),
         ),
       ],
     );
   }
 
-  Widget loginEmailAndPassword({required TextEditingController emailController,required TextEditingController passwordController}) {
+  Widget loginEmailAndPassword(
+      {required TextEditingController emailController,
+      required TextEditingController passwordController}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -160,8 +170,8 @@ class LoginScreen extends StatelessWidget {
             return null;
           },
           textInputAction: TextInputAction.done,
-          suffixIcon: Icon(
-              Icons.remove_red_eye_outlined, color: MyColors.primaryColor),
+          suffixIcon:
+              Icon(Icons.remove_red_eye_outlined, color: MyColors.primaryColor),
           hintText: "Enter your password",
           controller: passwordController,
         ),

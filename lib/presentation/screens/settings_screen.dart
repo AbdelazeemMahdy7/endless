@@ -1,5 +1,5 @@
 import 'package:endless/constant/strings.dart';
-import 'package:endless/res/build_profile_item.dart';
+import 'package:endless/presentation/widgets/build_profile_item.dart';
 import 'package:endless/shared/components.dart';
 import 'package:flutter/material.dart';
 

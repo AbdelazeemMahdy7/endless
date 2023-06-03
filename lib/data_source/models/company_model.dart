@@ -22,7 +22,7 @@ class CompanyModel extends CompanyEntity {
       email: json['email'],
       id: json['id'],
       locationId: json['location_id'],
-      media: json['media'],
+      media: json['media'].replaceAll("192.168.1.8", "192.168.43.143"),
       rate: json['rate'],
       site: json['site'],
       deletedAt: json['deleted_at'],

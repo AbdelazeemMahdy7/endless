@@ -1,5 +1,5 @@
-import 'package:endless/data/models/place.dart';
-import 'package:endless/data/webServices/places_webServices.dart';
+import 'package:endless/maps_data/models/place.dart';
+import 'package:endless/maps_data/webServices/places_webServices.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../models/place_directions.dart';

@@ -10,6 +10,7 @@ class OfferModel extends OfferEntity {
     required super.price,
     required super.date,
     required super.details,
+    required super.placeImage,
     super.updatedAt,
     super.createdAt,
     super.deletedAt,
@@ -34,6 +35,7 @@ class OfferModel extends OfferEntity {
       companyName: json['company_name'],
       eventName: json['event_name'],
       placeName: json['place_name'],
+      placeImage: json['place_image'].replaceAll("192.168.1.8", "192.168.43.143"),
     );
   }
 }

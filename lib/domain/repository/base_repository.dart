@@ -28,7 +28,7 @@ abstract class BaseRepository{
   Future<Either<Failure,CompanyEntity>> getCompanyById(int params);
 
   Future<Either<Failure,ReservationEntity>> addReservation(int params);
-  Future<Either<Failure,OfferEntity>> searchByEventId(int params);
-  Future<Either<Failure,List<String>>> getCompanyImages(int params);
+  Future<Either<Failure,List<OfferEntity>>> searchByEventId(String params);
+  Future<Either<Failure,List<dynamic>>> getCompanyImages(int params);
 
 }

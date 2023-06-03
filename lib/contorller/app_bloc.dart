@@ -1,4 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:endless/contorller/app_states.dart';
+import 'package:endless/core/errors/failures.dart';
 import 'package:endless/core/usecase/use_case.dart';
 import 'package:endless/domain/entity/company_entity.dart';
 import 'package:endless/domain/entity/offer_entity.dart';
@@ -112,10 +114,15 @@ class AppBloc extends Cubit<AppStates> {
 
   List<OfferEntity> offersList = [];
 
-  void getOffers(NoParams params) async {
+  void getOffers({NoParams? params,String? event}) async {
+    offersList = [];
     emit(OffersLoadingState());
-
-    final result = await offersUseCase(params);
+    late final Either<Failure, List<OfferEntity>> result;
+    if(event != null){
+      result = await searchByEventIdUseCase(event);
+    }else{
+      result = await offersUseCase(params!);
+    }
 
     result.fold((error) {
       emit(OffersErrorState(error.toString()));
@@ -128,6 +135,7 @@ class AppBloc extends Cubit<AppStates> {
   CompanyEntity? companyEntity;
 
   void getCompany(int id) async {
+    companyEntity = null;
     emit(GetCompanyLoadingState());
 
     final result = await getCompanyByIdUseCase(id);
@@ -144,6 +152,7 @@ class AppBloc extends Cubit<AppStates> {
   ReservationEntity? reservationEntity;
 
   void addReservation(int id) async {
+    reservationEntity = null;
     emit(AddReservationLoadingState());
 
     final result = await addReservationUseCase(id);
@@ -156,22 +165,24 @@ class AppBloc extends Cubit<AppStates> {
     });
   }
 
-  OfferEntity? offerEntity;
 
-  void searchByEvent(int id) async {
+  void searchByEvent(String event) async {
+    offersList = [];
     emit(SearchByEventLoadingState());
 
-    final result = await searchByEventIdUseCase(id);
+    final result = await searchByEventIdUseCase(event);
 
     result.fold((error) {
       emit(SearchByEventErrorState(error.toString()));
     }, (data) {
-      offerEntity = data;
+      offersList = data;
+      print('offersList =>>>>>>>>>>>>>>>>$offersList');
       emit(SearchByEventSuccessState(data));
     });
   }
   List<String> companyImages = [];
   void getCompanyImages(int id) async {
+    companyImages = [];
     emit(GetCompanyImagesLoadingState());
 
     final result = await getCompanyImagesUseCase(id);
@@ -179,9 +190,27 @@ class AppBloc extends Cubit<AppStates> {
     result.fold((error) {
       emit(GetCompanyImagesErrorState(error.toString()));
     }, (data) {
-      companyImages = data;
+      for (var element in data) {
+        companyImages.add(element.toString());
+      }
       emit(GetCompanyImagesSuccessState());
     });
   }
 
+  int? offerIndex;
+
+  void getOfferIndex(int index){
+    offerIndex = index;
+  }
+
+  List<CompanyEntity> favouriteList = [];
+
+  void addFavouriteCompany(CompanyEntity companyEntity){
+    favouriteList.add(companyEntity);
+    emit(AddFavouriteCompanyState());
+  }
+  void removeFavouriteCompany(int index){
+    favouriteList.removeAt(index);
+    emit(AddFavouriteCompanyState());
+  }
 }

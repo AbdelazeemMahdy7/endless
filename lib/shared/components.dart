@@ -21,6 +21,7 @@ Widget buildRateStars() {
     itemSize: 16,
     maxRating: 5,
     minRating: 3,
+    initialRating: 4,
   );
 }
 

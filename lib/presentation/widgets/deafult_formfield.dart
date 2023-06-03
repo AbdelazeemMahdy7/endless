@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constant/colors.dart';
+import '../../constant/colors.dart';
 
 class DeafultFormField extends StatelessWidget {
   final String hintText;

@@ -7,6 +7,7 @@ class CompanyEntity {
   String site;
   int locationId;
   int rate;
+  bool? favourite = false;
   String? deletedAt;
   String? createdAt;
   String? updatedAt;

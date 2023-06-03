@@ -5,7 +5,7 @@ class LogOutModel extends LogOutEntity{
 
   factory LogOutModel.fromJson(Map<String,dynamic> json){
     return LogOutModel(
-      message: json['message'],
+      message: json['msg'],
       status: json['status'],
     );
   }

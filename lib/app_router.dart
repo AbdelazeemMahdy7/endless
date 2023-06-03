@@ -1,20 +1,19 @@
-import 'package:endless/data/repository/maps_repository.dart';
-import 'package:endless/data/webServices/places_webServices.dart';
-import 'package:endless/endless_screens/endless_screen.dart';
+import 'package:endless/contorller/maps/maps_cubit.dart';
+import 'package:endless/maps_data/repository/maps_repository.dart';
+import 'package:endless/maps_data/webServices/places_webServices.dart';
+import 'package:endless/presentation/screens/endless_screen.dart';
 import 'package:endless/presentation/screens/best_offer_screen.dart';
 import 'package:endless/constant/strings.dart';
-import 'package:endless/login/login_screen.dart';
+import 'package:endless/presentation/screens/login_screen.dart';
 import 'package:endless/presentation/screens/notifications_screen.dart';
-import 'package:endless/on_boarding/onBoarding_screen.dart';
+import 'package:endless/presentation/screens/onBoarding_screen.dart';
 import 'package:endless/presentation/screens/map_screen.dart';
-import 'package:endless/register/register_screen.dart';
-import 'package:endless/presentation/screens/reservation_screen.dart';
-import 'package:endless/spalsh/splash_screen.dart';
+import 'package:endless/presentation/screens/register_screen.dart';
+import 'package:endless/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'buisness_logic/cubit/maps/maps_cubit.dart';
-import 'endless_screens/favorite_screen.dart';
-import 'endless_screens/home_screen.dart';
+import 'presentation/screens/favorite_screen.dart';
+import 'presentation/screens/home_screen.dart';
 
 
 
@@ -54,10 +53,6 @@ class AppRouter{
          builder: (_)=>NotificationScreen(),
        );
 
-       case reservationScreen:
-       return MaterialPageRoute(
-         builder: (_)=>ReservationScreen(),
-       );
        case bestOfferScreen:
        return MaterialPageRoute(
          builder: (_)=>BestOfferScreen(),

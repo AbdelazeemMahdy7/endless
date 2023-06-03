@@ -5,9 +5,10 @@ class OfferEntity{
   int? companyId;
   int? placeId;
   int? eventId;
-  int price;
+  String price;
   String date;
   String details;
+  String placeImage;
   String? deletedAt;
   String? createdAt;
   String? updatedAt;
@@ -22,6 +23,7 @@ class OfferEntity{
     this.placeId,
     this.eventId,
     required this.price,
+    required this.placeImage,
     required this.date,
     required this.details,
     this.deletedAt,

@@ -102,7 +102,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Content-Type': 'application/json',
       if (!isMultipart) 'Accept': 'application/json',
       if (token != null)
-        'Authorization': '${base == null ? 'Token' : ''} $token'
+        'Authorization': 'Bearer $token'
     };
 
     if (url.contains('??')) {
@@ -155,7 +155,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Content-Type': 'application/json',
       if (!isMultipart) 'Accept': 'application/json',
       if (token != null)
-        'Authorization': '${base == null ? 'Token' : ''} $token'
+        'Authorization': 'Bearer $token'
     };
 
     if (url.contains('??')) {
@@ -202,7 +202,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Content-Type': 'application/json',
       if (!isMultipart) 'Accept': 'application/json',
       if (token != null)
-        'Authorization': '${base == null ? 'Token' : ''} $token'
+        'Authorization': 'Bearer $token'
     };
 
     if (url.contains('??')) {
@@ -251,7 +251,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Content-Type': 'application/json',
       if (!isMultipart) 'Accept': 'application/json',
       if (token != null)
-        'Authorization': '${base == null ? 'Token' : ''} $token'
+        'Authorization': 'Bearer $token'
     };
 
     if (url.contains('??')) {
@@ -301,7 +301,7 @@ class DioImpl extends DioHelper {
       if (!isMultipart) 'Content-Type': 'application/json',
       if (!isMultipart) 'Accept': 'application/json',
       if (token != null)
-        'Authorization': '${base == null ? 'Token' : ''} $token'
+        'Authorization': 'Bearer $token'
     };
 
     if (url.contains('??')) {

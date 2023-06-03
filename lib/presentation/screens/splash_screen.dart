@@ -1,6 +1,5 @@
-import 'package:endless/constant/colors.dart';
 import 'package:flutter/material.dart';
-import '../constant/strings.dart';
+import '../../constant/strings.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,25 +19,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(
-                image: AssetImage("assets/images/logo.jpeg"), width: 250),
-            const SizedBox(
+            Center(
+              child: Image(
+                  image: AssetImage("assets/images/splash_screen.jpeg"), width: 250),
+            ),
+            SizedBox(
               height: 30,
             ),
-            Text(
-              "Endless Events",
-              style: TextStyle(
-                color: MyColors.primaryColor,
-                fontSize: 25,
-                fontStyle: FontStyle.italic,
-              ),
-            )
+
           ],
         ),
       ),

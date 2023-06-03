@@ -1,7 +1,7 @@
 
-import 'package:endless/endless_screens/favorite_screen.dart';
-import 'package:endless/endless_screens/home_screen.dart';
-import 'package:endless/endless_screens/profile_screen.dart';
+import 'package:endless/presentation/screens/favorite_screen.dart';
+import 'package:endless/presentation/screens/home_screen.dart';
+import 'package:endless/presentation/screens/profile_screen.dart';
 import 'package:endless/presentation/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -25,8 +25,8 @@ abstract class BaseRemoteDataSource{
   Future<List<OfferModel>> offers(NoParams params);
   Future<CompanyModel> getCompanyById(int params);
   Future<ReservationModel> addReservation(int params);
-  Future<OfferModel> searchByEventId(int params);
-  Future<List<String>> getCompanyImages(int params);
+  Future<List<OfferModel>> searchByEventId(String params);
+  Future<List<dynamic>> getCompanyImages(int params);
 
 }
 
@@ -104,14 +104,14 @@ class RemoteDataSource implements BaseRemoteDataSource{
   }
 
   @override
-  Future<OfferModel> searchByEventId(int params) async{
-    final Response response = await dioHelper.post(url: searchByEventEndpoint, token: token,data: {'event_id':params});
+  Future<List<OfferModel>> searchByEventId(String params) async{
+    final Response response = await dioHelper.post(url: searchByEventEndpoint, token: token,data: {'event_type':params});
 
-    return OfferModel.fromJson(response.data);
-  }
+    return List<OfferModel>.from(
+        (response.data['offers'] as List).map((e) => OfferModel.fromJson(e)));  }
 
   @override
-  Future<List<String>> getCompanyImages(int params)async {
+  Future<List<dynamic>> getCompanyImages(int params)async {
     final Response response = await dioHelper.post(url: companyImagesEndpoint, token: token,data: {'company_id':params});
 
     return response.data['images'];

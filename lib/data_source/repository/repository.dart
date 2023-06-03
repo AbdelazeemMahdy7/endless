@@ -103,19 +103,19 @@ class Repository extends BaseRepository{
   }
 
   @override
-  Future<Either<Failure, OfferEntity>> searchByEventId(int params) async{
+  Future<Either<Failure, List<OfferEntity>>> searchByEventId(String params) async{
     try{
-      final OfferEntity offerEntity = await remoteDataSource.searchByEventId(params);
-      return Right(offerEntity);
+      final List<OfferEntity> offersList = await remoteDataSource.searchByEventId(params);
+      return Right(offersList);
     } on ServerException catch(e){
       return left(ServerFailure(message: e.message));
     }
   }
 
   @override
-  Future<Either<Failure, List<String>>> getCompanyImages(int params)async {
+  Future<Either<Failure, List<dynamic>>> getCompanyImages(int params)async {
     try{
-      final List<String> imagesList = await remoteDataSource.getCompanyImages(params);
+      final List<dynamic> imagesList = await remoteDataSource.getCompanyImages(params);
       return Right(imagesList);
     } on ServerException catch(e){
       return left(ServerFailure(message: e.message));

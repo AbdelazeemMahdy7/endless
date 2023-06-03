@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:endless/data/models/place.dart';
-import 'package:endless/data/models/place_directions.dart';
-import 'package:endless/data/models/place_suggestion.dart';
-import 'package:endless/data/repository/maps_repository.dart';
+import 'package:endless/maps_data/models/place.dart';
+import 'package:endless/maps_data/models/place_directions.dart';
+import 'package:endless/maps_data/models/place_suggestion.dart';
+import 'package:endless/maps_data/repository/maps_repository.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 

@@ -1,6 +1,6 @@
 import 'package:endless/constant/colors.dart';
 import 'package:endless/constant/strings.dart';
-import 'package:endless/on_boarding/onBoarding_model.dart';
+import 'package:endless/data_source/models/onBoarding_model.dart';
 import 'package:endless/shared/components.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';

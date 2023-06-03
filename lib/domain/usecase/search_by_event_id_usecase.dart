@@ -4,7 +4,7 @@ import 'package:endless/core/usecase/use_case.dart';
 import 'package:endless/domain/entity/offer_entity.dart';
 import 'package:endless/domain/repository/base_repository.dart';
 
-class SearchByEventIdUseCase extends UseCase<OfferEntity,int>{
+class SearchByEventIdUseCase extends UseCase<List<OfferEntity>,String>{
 
   BaseRepository baseRepository;
 
@@ -12,7 +12,7 @@ class SearchByEventIdUseCase extends UseCase<OfferEntity,int>{
   SearchByEventIdUseCase(this.baseRepository);
 
   @override
-  Future<Either<Failure, OfferEntity>> call(int params) async{
+  Future<Either<Failure, List<OfferEntity>>> call(String params) async{
     return await baseRepository.searchByEventId(params);
   }
 }
